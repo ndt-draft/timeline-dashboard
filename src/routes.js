@@ -3,6 +3,7 @@ import asyncComponent from './components/AsyncComponent'
 
 const AsyncHome = asyncComponent(() => import('./containers/home'))
 const AsyncAbout = asyncComponent(() => import('./containers/about'))
+const AsyncTimeline = asyncComponent(() => import('./containers/timeline'))
 
 export default [
   {
@@ -16,6 +17,11 @@ export default [
       {
         path: '/about',
         component: AsyncAbout,
+        exact: true
+      },
+      {
+        path: '/timeline',
+        component: AsyncTimeline,
         exact: true
       }
     ]
