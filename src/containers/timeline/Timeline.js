@@ -63,10 +63,10 @@ const TimelineContent = props => {
 
   return (
     <Timeline
+      sidebarWidth={0}
       groups={props.groups}
       items={props.items}
       stackItems={true}
-      sidebarContent={<div>Groups</div>}
       defaultTimeStart={moment(firstDay)}
       defaultTimeEnd={moment(lastDay)}
       canMove={true}

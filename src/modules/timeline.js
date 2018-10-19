@@ -82,7 +82,7 @@ const initialState = {
     },
     {
       id: 2,
-      group: 2,
+      group: 1,
       title: 'item 2',
       start_time: moment().add(-1, 'day'),
       end_time: moment().add(12, 'hour'),
@@ -101,7 +101,7 @@ const initialState = {
       selectedBgColor: '#eaeaea'
     }
   ],
-  groups: [{ id: 1, title: 'Project 1' }, { id: 2, title: 'Human 2' }]
+  groups: [{ id: 1, title: 'Timeline' }]
 }
 
 export default (state = initialState, action) => {
