@@ -6,7 +6,16 @@ import { createTimelineItem } from '../../modules/timeline'
 const TimelineForm = props => {
   return (
     <Formik
-      initialValues={{ title: '', group: '1', start_time: '', end_time: '' }}
+      initialValues={{
+        title: '',
+        group: '1',
+        start_time: '',
+        start_hour: 0,
+        start_minute: 0,
+        end_time: '',
+        end_hour: 0,
+        end_minute: 0
+      }}
       validate={values => {
         let errors = {}
         return errors
@@ -55,9 +64,11 @@ const TimelineForm = props => {
                   name="start_hour"
                   required
                   className="form-control">
-                  <option>0</option>
-                  <option>...</option>
-                  <option>23</option>
+                  {props.hours.map(hour => (
+                    <option key={`start-hour-${hour}`} option={hour}>
+                      {hour}
+                    </option>
+                  ))}
                 </Field>
               </div>
               <div className="col">
@@ -67,9 +78,11 @@ const TimelineForm = props => {
                   name="start_minute"
                   required
                   className="form-control">
-                  <option>0</option>
-                  <option>...</option>
-                  <option>59</option>
+                  {props.minutes.map(minute => (
+                    <option key={`start-minute-${minute}`} option={minute}>
+                      {minute}
+                    </option>
+                  ))}
                 </Field>
               </div>
             </div>
@@ -93,9 +106,11 @@ const TimelineForm = props => {
                   name="end_hour"
                   required
                   className="form-control">
-                  <option>0</option>
-                  <option>...</option>
-                  <option>23</option>
+                  {props.hours.map(hour => (
+                    <option key={`end-hour-${hour}`} option={hour}>
+                      {hour}
+                    </option>
+                  ))}
                 </Field>
               </div>
               <div className="col">
@@ -105,9 +120,11 @@ const TimelineForm = props => {
                   name="end_minute"
                   required
                   className="form-control">
-                  <option>0</option>
-                  <option>...</option>
-                  <option>59</option>
+                  {props.minutes.map(minute => (
+                    <option key={`end-minute-${minute}`} option={minute}>
+                      {minute}
+                    </option>
+                  ))}
                 </Field>
               </div>
             </div>
@@ -126,7 +143,9 @@ const TimelineForm = props => {
 }
 
 const mapStateToProps = state => ({
-  groups: state.timeline.groups
+  groups: state.timeline.groups,
+  hours: state.timeline.hours,
+  minutes: state.timeline.minutes
 })
 
 const mapDispatchToProps = {

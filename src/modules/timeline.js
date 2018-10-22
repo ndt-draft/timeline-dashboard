@@ -14,14 +14,22 @@ export const createTimelineItem = values => {
   return (dispatch, getState) => {
     let state = getState()
     let items = state.timeline.items
+    let startTime = `${values.start_time} ${values.start_hour}:${
+      values.start_minute
+    }:00`
+    let endTime = `${values.end_time} ${values.end_hour}:${
+      values.end_minute
+    }:00`
+
+    console.log(startTime, endTime, new Date(startTime), new Date(endTime))
 
     items = [
       ...items,
       {
         ...values,
         id: items.length + 1,
-        start_time: moment(new Date(values.start_time)),
-        end_time: moment(new Date(values.end_time)),
+        start_time: moment(new Date(startTime)),
+        end_time: moment(new Date(endTime)),
         color: '#31302b',
         bgColor: '#cdf292',
         selectedBgColor: '#eaeaea'
@@ -101,7 +109,10 @@ const initialState = {
       selectedBgColor: '#eaeaea'
     }
   ],
-  groups: [{ id: 1, title: 'Timeline' }]
+  groups: [{ id: 1, title: 'Timeline' }],
+  // https://stackoverflow.com/a/29559488/2833319
+  hours: Array.from(new Array(24), (x, i) => i),
+  minutes: Array.from(new Array(60), (x, i) => i)
 }
 
 export default (state = initialState, action) => {

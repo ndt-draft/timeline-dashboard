@@ -4,10 +4,7 @@ import styles from './Header.module.scss'
 
 const Header = () => (
   <header className={styles.header}>
-    <Link to="/">Home</Link>
-    <Link to="/about">About</Link>
-    <Link to="/timeline">Timeline</Link>
-    <Link to="/timeline/groups">Groups</Link>
+    <Link to="/">Timeline</Link>
     <Link to="/timeline/items">Items</Link>
   </header>
 )
