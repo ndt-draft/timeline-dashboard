@@ -14,10 +14,10 @@ export const createTimelineItem = values => {
   return (dispatch, getState) => {
     let state = getState()
     let items = state.timeline.items
-    let startTime = `${values.start_time} ${values.start_hour}:${
+    let startTime = `${values.start_date} ${values.start_hour}:${
       values.start_minute
     }:00`
-    let endTime = `${values.end_time} ${values.end_hour}:${
+    let endTime = `${values.end_date} ${values.end_hour}:${
       values.end_minute
     }:00`
 
@@ -61,6 +61,36 @@ export const createGroup = values => {
       updateTimelineData({
         groups
       })
+    )
+  }
+}
+
+export const populateForEdit = items => {
+  return (dispatch, getState) => {
+    dispatch(
+      updateTimelineData({
+        edit: false
+      })
+    )
+
+    setTimeout(
+      () =>
+        dispatch(
+          updateTimelineData({
+            formData: {
+              ...items,
+              // @see https://momentjs.com/docs/#/displaying/format/
+              start_date: items.start_time.format('YYYY-MM-DD'),
+              start_hour: items.start_time.format('H'),
+              start_minute: items.start_time.format('m'),
+              end_date: items.end_time.format('YYYY-MM-DD'),
+              end_hour: items.end_time.format('H'),
+              end_minute: items.end_time.format('m')
+            },
+            edit: true
+          })
+        ),
+      0
     )
   }
 }
@@ -112,7 +142,18 @@ const initialState = {
   groups: [{ id: 1, title: 'Timeline' }],
   // https://stackoverflow.com/a/29559488/2833319
   hours: Array.from(new Array(24), (x, i) => i),
-  minutes: Array.from(new Array(60), (x, i) => i)
+  minutes: Array.from(new Array(60), (x, i) => i),
+  formData: {
+    title: '',
+    group: '1',
+    start_date: '',
+    start_hour: 0,
+    start_minute: 0,
+    end_date: '',
+    end_hour: 0,
+    end_minute: 0
+  },
+  edit: false
 }
 
 export default (state = initialState, action) => {

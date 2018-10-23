@@ -9,10 +9,10 @@ const TimelineForm = props => {
       initialValues={{
         title: '',
         group: '1',
-        start_time: '',
+        start_date: '',
         start_hour: 0,
         start_minute: 0,
-        end_time: '',
+        end_date: '',
         end_hour: 0,
         end_minute: 0
       }}
@@ -52,7 +52,7 @@ const TimelineForm = props => {
                 <label>Start time</label>
                 <Field
                   type="date"
-                  name="start_time"
+                  name="start_date"
                   required
                   className="form-control"
                 />
@@ -94,7 +94,7 @@ const TimelineForm = props => {
                 <label>End time</label>
                 <Field
                   type="date"
-                  name="end_time"
+                  name="end_date"
                   required
                   className="form-control"
                 />
@@ -134,7 +134,7 @@ const TimelineForm = props => {
             type="submit"
             disabled={isSubmitting}
             className="btn btn-primary">
-            Create item
+            Create
           </button>
         </Form>
       )}

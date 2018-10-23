@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Timeline, { TodayMarker } from 'react-calendar-timeline'
 import moment from 'moment'
+import { populateForEdit } from '../../modules/timeline'
 import './Timeline.scss'
 
 const TimelineContent = props => {
@@ -34,7 +35,7 @@ const TimelineContent = props => {
             fontSize: 14
           },
           onMouseDown: () => {
-            console.log('on item click', item)
+            props.populateForEdit(item)
           }
         })}>
         {itemContext.useResizeHandle ? <div {...leftResizeProps} /> : null}
@@ -69,10 +70,16 @@ const TimelineContent = props => {
       stackItems={true}
       defaultTimeStart={moment(firstDay)}
       defaultTimeEnd={moment(lastDay)}
-      canMove={true}
+      canMove={false}
+      canResize={false}
       lineHeight={50}
       itemRenderer={itemRenderer}>
-      <TodayMarker interval={2000} />
+      <TodayMarker>
+        {({ styles, date }) => {
+          styles = { ...styles, backgroundColor: 'red' }
+          return <div style={styles} />
+        }}
+      </TodayMarker>
     </Timeline>
   )
 }
@@ -82,7 +89,9 @@ const mapStateToProps = state => ({
   groups: state.timeline.groups
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  populateForEdit
+}
 
 export default connect(
   mapStateToProps,
