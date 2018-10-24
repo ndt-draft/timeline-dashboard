@@ -119,39 +119,8 @@ const ACTION_HANDLERS = {
 }
 
 // Reducer
-const initialState = {
-  items: [
-    {
-      id: 1,
-      group: 1,
-      title: 'item 1',
-      start_time: moment(),
-      end_time: moment().add(1, 'day'),
-      color: '#31302b',
-      bgColor: '#bdeeff',
-      selectedBgColor: '#eaeaea'
-    },
-    {
-      id: 2,
-      group: 1,
-      title: 'item 2',
-      start_time: moment().add(-1, 'day'),
-      end_time: moment().add(12, 'hour'),
-      color: '#31302b',
-      bgColor: '#bdeeff',
-      selectedBgColor: '#eaeaea'
-    },
-    {
-      id: 3,
-      group: 1,
-      title: 'item 3',
-      start_time: moment().add(12, 'hour'),
-      end_time: moment().add(3, 'day'),
-      color: '#31302b',
-      bgColor: '#cdf292',
-      selectedBgColor: '#eaeaea'
-    }
-  ],
+export const initialState = {
+  items: [],
   groups: [{ id: 1, title: 'Timeline' }],
   // https://stackoverflow.com/a/29559488/2833319
   hours: Array.from(new Array(24), (x, i) => i),
