@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { push } from 'connected-react-router'
 
 // Constants
 export const UPDATE_TIMELINE_DATA = 'counter/UPDATE_TIMELINE_DATA'
@@ -21,8 +22,6 @@ export const createTimelineItem = values => {
       values.end_minute
     }:00`
 
-    console.log(startTime, endTime, new Date(startTime), new Date(endTime))
-
     items = [
       ...items,
       {
@@ -41,6 +40,8 @@ export const createTimelineItem = values => {
         items
       })
     )
+
+    dispatch(push('/timeline'))
   }
 }
 
@@ -69,29 +70,21 @@ export const populateForEdit = items => {
   return (dispatch, getState) => {
     dispatch(
       updateTimelineData({
-        edit: false
+        formData: {
+          ...items,
+          // @see https://momentjs.com/docs/#/displaying/format/
+          start_date: items.start_time.format('YYYY-MM-DD'),
+          start_hour: items.start_time.format('H'),
+          start_minute: items.start_time.format('m'),
+          end_date: items.end_time.format('YYYY-MM-DD'),
+          end_hour: items.end_time.format('H'),
+          end_minute: items.end_time.format('m')
+        },
+        edit: true
       })
     )
 
-    setTimeout(
-      () =>
-        dispatch(
-          updateTimelineData({
-            formData: {
-              ...items,
-              // @see https://momentjs.com/docs/#/displaying/format/
-              start_date: items.start_time.format('YYYY-MM-DD'),
-              start_hour: items.start_time.format('H'),
-              start_minute: items.start_time.format('m'),
-              end_date: items.end_time.format('YYYY-MM-DD'),
-              end_hour: items.end_time.format('H'),
-              end_minute: items.end_time.format('m')
-            },
-            edit: true
-          })
-        ),
-      0
-    )
+    dispatch(push(`/timeline/items/${items.id}/edit`))
   }
 }
 

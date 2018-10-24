@@ -1,8 +1,7 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Formik, Form, Field } from 'formik'
 
-const TimelineEditForm = props => {
+const TimelineForm = props => {
   return (
     <Formik
       initialValues={props.formData}
@@ -11,6 +10,7 @@ const TimelineEditForm = props => {
         return errors
       }}
       onSubmit={(values, { setSubmitting }) => {
+        props.submit(values)
         setSubmitting(false)
       }}>
       {({ isSubmitting }) => (
@@ -123,7 +123,7 @@ const TimelineEditForm = props => {
             type="submit"
             disabled={isSubmitting}
             className="btn btn-primary">
-            Edit
+            {props.submitButtonText}
           </button>
         </Form>
       )}
@@ -131,17 +131,4 @@ const TimelineEditForm = props => {
   )
 }
 
-const mapStateToProps = state => ({
-  groups: state.timeline.groups,
-  hours: state.timeline.hours,
-  minutes: state.timeline.minutes,
-  edit: state.timeline.edit,
-  formData: state.timeline.formData
-})
-
-const mapDispatchToProps = {}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(TimelineEditForm)
+export default TimelineForm

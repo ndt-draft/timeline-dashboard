@@ -2,11 +2,11 @@ import DefaultLayout from './layouts/DefaultLayout'
 import asyncComponent from './components/AsyncComponent'
 
 const AsyncTimeline = asyncComponent(() => import('./containers/timeline'))
-const AsyncTimelineGroups = asyncComponent(() =>
-  import('./containers/timeline/TimelineGroupForm')
+const AsyncTimelineItemsCreate = asyncComponent(() =>
+  import('./containers/timelineCreate')
 )
-const AsyncTimelineItems = asyncComponent(() =>
-  import('./containers/timeline/TimelineForm')
+const AsyncTimelineItemsEdit = asyncComponent(() =>
+  import('./containers/timelineEdit')
 )
 
 export default [
@@ -24,12 +24,12 @@ export default [
         exact: true
       },
       {
-        path: '/timeline/groups',
-        component: AsyncTimelineGroups
+        path: '/timeline/items/:id/edit',
+        component: AsyncTimelineItemsEdit
       },
       {
-        path: '/timeline/items',
-        component: AsyncTimelineItems
+        path: '/timeline/items/create',
+        component: AsyncTimelineItemsCreate
       }
     ]
   }
