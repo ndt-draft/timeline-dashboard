@@ -26,7 +26,7 @@ export const createTimelineItem = values => {
       ...items,
       {
         ...values,
-        id: items.length + 1,
+        id: Math.random(),
         start_time: moment(new Date(startTime)),
         end_time: moment(new Date(endTime)),
         color: '#31302b',
@@ -66,25 +66,42 @@ export const createGroup = values => {
   }
 }
 
-export const populateForEdit = items => {
+export const populateForEdit = values => {
   return (dispatch, getState) => {
     dispatch(
       updateTimelineData({
         formData: {
-          ...items,
+          ...values,
           // @see https://momentjs.com/docs/#/displaying/format/
-          start_date: items.start_time.format('YYYY-MM-DD'),
-          start_hour: items.start_time.format('H'),
-          start_minute: items.start_time.format('m'),
-          end_date: items.end_time.format('YYYY-MM-DD'),
-          end_hour: items.end_time.format('H'),
-          end_minute: items.end_time.format('m')
+          start_date: values.start_time.format('YYYY-MM-DD'),
+          start_hour: values.start_time.format('H'),
+          start_minute: values.start_time.format('m'),
+          end_date: values.end_time.format('YYYY-MM-DD'),
+          end_hour: values.end_time.format('H'),
+          end_minute: values.end_time.format('m')
         },
         edit: true
       })
     )
 
-    dispatch(push(`/timeline/items/${items.id}/edit`))
+    dispatch(push(`/timeline/items/${values.id}/edit`))
+  }
+}
+
+export const updateTimelineItem = values => {
+  return (dispatch, getState) => {
+    let state = getState()
+    let items = state.timeline.items
+
+    items = items.filter(item => item.id !== values.id)
+
+    dispatch(
+      updateTimelineData({
+        items
+      })
+    )
+
+    dispatch(createTimelineItem(values))
   }
 }
 

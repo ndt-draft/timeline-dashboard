@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { updateTimelineItem } from '../../modules/timeline'
 import TimelineForm from '../../components/TimelineForm'
 
 const mapStateToProps = state => ({
@@ -10,7 +11,9 @@ const mapStateToProps = state => ({
   submitButtonText: 'Edit'
 })
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  submit: updateTimelineItem
+}
 
 export default connect(
   mapStateToProps,
