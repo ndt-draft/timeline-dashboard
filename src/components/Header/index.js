@@ -5,7 +5,7 @@ import styles from './Header.module.scss'
 const Header = () => (
   <header className={styles.header}>
     <Link to="/">Timeline</Link>
-    <Link to="/timeline/items/create">Items</Link>
+    <Link to="/timeline/items/create">Create Item</Link>
   </header>
 )
 
