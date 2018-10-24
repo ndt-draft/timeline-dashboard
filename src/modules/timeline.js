@@ -15,25 +15,9 @@ export const createTimelineItem = values => {
   return (dispatch, getState) => {
     let state = getState()
     let items = state.timeline.items
-    let startTime = `${values.start_date} ${values.start_hour}:${
-      values.start_minute
-    }:00`
-    let endTime = `${values.end_date} ${values.end_hour}:${
-      values.end_minute
-    }:00`
+    let newItem = makeTimelineItem(values)
 
-    items = [
-      ...items,
-      {
-        ...values,
-        id: Math.random(),
-        start_time: moment(new Date(startTime)),
-        end_time: moment(new Date(endTime)),
-        color: '#31302b',
-        bgColor: '#cdf292',
-        selectedBgColor: '#eaeaea'
-      }
-    ]
+    items = [...items, newItem]
 
     dispatch(
       updateTimelineData({
@@ -91,9 +75,10 @@ export const populateForEdit = values => {
 export const updateTimelineItem = values => {
   return (dispatch, getState) => {
     let state = getState()
-    let items = state.timeline.items
+    let items = [...state.timeline.items]
 
-    items = items.filter(item => item.id !== values.id)
+    let updateIndex = items.findIndex(item => item.id === values.id)
+    items[updateIndex] = makeTimelineItem(values)
 
     dispatch(
       updateTimelineData({
@@ -101,7 +86,25 @@ export const updateTimelineItem = values => {
       })
     )
 
-    dispatch(createTimelineItem(values))
+    dispatch(push('/timeline'))
+  }
+}
+
+// Utilities
+const makeTimelineItem = values => {
+  let startTime = `${values.start_date} ${values.start_hour}:${
+    values.start_minute
+  }:00`
+  let endTime = `${values.end_date} ${values.end_hour}:${values.end_minute}:00`
+
+  return {
+    ...values,
+    id: values.id ? values.id : Math.random(),
+    start_time: moment(new Date(startTime)),
+    end_time: moment(new Date(endTime)),
+    color: '#31302b',
+    bgColor: '#cdf292',
+    selectedBgColor: '#eaeaea'
   }
 }
 
