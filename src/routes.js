@@ -8,6 +8,9 @@ const AsyncTimelineItemsCreate = asyncComponent(() =>
 const AsyncTimelineItemsEdit = asyncComponent(() =>
   import('./containers/timelineEdit')
 )
+const AsyncSignup = asyncComponent(() => import('./containers/signup'))
+const AsyncSignin = asyncComponent(() => import('./containers/signin'))
+const AsyncSignout = asyncComponent(() => import('./containers/signout'))
 
 export default [
   {
@@ -30,6 +33,18 @@ export default [
       {
         path: '/timeline/items/create',
         component: AsyncTimelineItemsCreate
+      },
+      {
+        path: '/signup',
+        component: AsyncSignup
+      },
+      {
+        path: '/signin',
+        component: AsyncSignin
+      },
+      {
+        path: '/signout',
+        component: AsyncSignout
       }
     ]
   }

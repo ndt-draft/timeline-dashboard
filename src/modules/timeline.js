@@ -1,5 +1,6 @@
 import moment from 'moment'
 import { push } from 'connected-react-router'
+import api from './api'
 
 // Constants
 export const UPDATE_TIMELINE_DATA = 'counter/UPDATE_TIMELINE_DATA'
@@ -11,11 +12,46 @@ export const updateTimelineData = payload => ({
 })
 
 // Thunks
+export const fetchTimelineItems = () => {
+  return (dispatch, getState) => {
+    // let uid = api.auth.currentUser.uid
+    let uid = 'pdugVibSfJeAPi4g41CWpWlbowQ2'
+
+    api.database
+      .ref(`/items/${uid}`)
+      .once('value')
+      .then(function(snapshot) {
+        let items = snapshot.val() || []
+        dispatch(
+          updateTimelineData({
+            items
+          })
+        )
+      })
+  }
+}
+
 export const createTimelineItem = values => {
   return (dispatch, getState) => {
     let state = getState()
     let items = state.timeline.items
     let newItem = makeTimelineItem(values)
+
+    // firebase
+    let uid = api.auth.currentUser.uid
+
+    var newItemKey = api.database
+      .ref()
+      .child('items')
+      .push().key
+
+    api.database.ref(`/items/${uid}/${newItemKey}`).set({
+      title: newItem.title,
+      group: newItem.group,
+      start_time: newItem.start_time.unix(),
+      end_time: newItem.end_time.unix()
+    })
+    // end firebase
 
     items = [...items, newItem]
 

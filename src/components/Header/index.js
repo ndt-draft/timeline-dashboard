@@ -6,6 +6,9 @@ const Header = () => (
   <header className={styles.header}>
     <Link to="/">Timeline</Link>
     <Link to="/timeline/items/create">Create Item</Link>
+    <Link to="/signup">Sign up</Link>
+    <Link to="/signin">Sign in</Link>
+    <Link to="/signout">Sign out</Link>
   </header>
 )
 
