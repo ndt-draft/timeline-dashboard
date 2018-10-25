@@ -1,6 +1,7 @@
 import moment from 'moment'
 import { push } from 'connected-react-router'
 import api from './api'
+import utils from './utils'
 
 // Constants
 export const UPDATE_TIMELINE_DATA = 'counter/UPDATE_TIMELINE_DATA'
@@ -14,17 +15,28 @@ export const updateTimelineData = payload => ({
 // Thunks
 export const fetchTimelineItems = () => {
   return (dispatch, getState) => {
-    // let uid = api.auth.currentUser.uid
-    let uid = 'pdugVibSfJeAPi4g41CWpWlbowQ2'
+    let uid = utils.getUid()
 
     api.database
       .ref(`/items/${uid}`)
       .once('value')
       .then(function(snapshot) {
         let items = snapshot.val() || []
+        let newItems = Object.keys(items).map(id => {
+          let values = items[id]
+          return {
+            id,
+            ...values,
+            start_time: moment(new Date(values.start_time * 1000)),
+            end_time: moment(new Date(values.end_time * 1000)),
+            color: '#31302b',
+            bgColor: '#cdf292',
+            selectedBgColor: '#eaeaea'
+          }
+        })
         dispatch(
           updateTimelineData({
-            items
+            items: newItems
           })
         )
       })

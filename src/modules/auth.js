@@ -1,4 +1,6 @@
 import api from './api'
+import utils from './utils'
+import { push } from 'connected-react-router'
 
 // Constants
 
@@ -7,10 +9,14 @@ export const signup = values => {
   return dispatch => {
     api.auth
       .createUserWithEmailAndPassword(values.email, values.password)
+      .then(({ user }) => {
+        utils.saveUid(user.uid)
+        dispatch(push('/'))
+      })
       .catch(function(error) {
         // Handle Errors here.
-        var errorCode = error.code
-        var errorMessage = error.message
+        // var errorCode = error.code
+        // var errorMessage = error.message
         // ...
       })
   }
@@ -20,12 +26,24 @@ export const signin = values => {
   return dispatch => {
     api.auth
       .signInWithEmailAndPassword(values.email, values.password)
+      .then(({ user }) => {
+        utils.saveUid(user.uid)
+        dispatch(push('/'))
+      })
       .catch(function(error) {
         // Handle Errors here.
-        var errorCode = error.code
-        var errorMessage = error.message
+        // var errorCode = error.code
+        // var errorMessage = error.message
         // ...
       })
+  }
+}
+
+export const signout = () => {
+  return dispatch => {
+    utils.deleteUid()
+    api.auth.signOut()
+    dispatch(push('/signin'))
   }
 }
 

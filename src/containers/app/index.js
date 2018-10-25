@@ -6,16 +6,6 @@ import api from '../../modules/api'
 class App extends React.Component {
   componentDidMount() {
     api.initializeApp()
-
-    api.auth.onAuthStateChanged(function(user) {
-      if (user) {
-        // User is signed in and currentUser will no longer return null.
-        console.log(user)
-      } else {
-        // No user is signed in.
-        console.log('go on', api.auth.currentUser)
-      }
-    })
   }
 
   render() {

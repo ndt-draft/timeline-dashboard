@@ -1,4 +1,5 @@
 import DefaultLayout from './layouts/DefaultLayout'
+import PrivateLayout from './layouts/PrivateLayout'
 import asyncComponent from './components/AsyncComponent'
 
 const AsyncTimeline = asyncComponent(() => import('./containers/timeline'))
@@ -17,6 +18,19 @@ export default [
     layout: DefaultLayout,
     routes: [
       {
+        path: '/signup',
+        component: AsyncSignup
+      },
+      {
+        path: '/signin',
+        component: AsyncSignin
+      }
+    ]
+  },
+  {
+    layout: PrivateLayout,
+    routes: [
+      {
         path: '/',
         component: AsyncTimeline,
         exact: true
@@ -33,14 +47,6 @@ export default [
       {
         path: '/timeline/items/create',
         component: AsyncTimelineItemsCreate
-      },
-      {
-        path: '/signup',
-        component: AsyncSignup
-      },
-      {
-        path: '/signin',
-        component: AsyncSignin
       },
       {
         path: '/signout',

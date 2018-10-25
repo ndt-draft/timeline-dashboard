@@ -44,7 +44,7 @@ const Signin = props => {
             type="submit"
             disabled={isSubmitting}
             className="btn btn-primary">
-            Signin
+            Sign in
           </button>
         </Form>
       )}

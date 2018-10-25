@@ -1,9 +1,10 @@
 import React from 'react'
-import api from '../../modules/api'
+import { connect } from 'react-redux'
+import { signout } from '../../modules/auth'
 
 class Signout extends React.Component {
   componentDidMount() {
-    api.auth.signOut()
+    this.props.signout()
   }
 
   render() {
@@ -11,4 +12,13 @@ class Signout extends React.Component {
   }
 }
 
-export default Signout
+const mapStateToProps = state => ({})
+
+const mapDispatchToProps = {
+  signout
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Signout)
