@@ -4,7 +4,7 @@ import api from './api'
 import utils from './utils'
 
 // Constants
-export const UPDATE_TIMELINE_DATA = 'counter/UPDATE_TIMELINE_DATA'
+export const UPDATE_TIMELINE_DATA = 'timeline/UPDATE_TIMELINE_DATA'
 
 // Actions
 export const updateTimelineData = payload => ({
@@ -47,11 +47,13 @@ export const createTimelineItem = values => {
   return (dispatch, getState) => {
     let state = getState()
     let items = state.timeline.items
+
+    let uid = api.auth.currentUser.uid
+    values.id = uid
+
     let newItem = makeTimelineItem(values)
 
     // firebase
-    let uid = api.auth.currentUser.uid
-
     var newItemKey = api.database
       .ref()
       .child('items')
@@ -126,7 +128,19 @@ export const updateTimelineItem = values => {
     let items = [...state.timeline.items]
 
     let updateIndex = items.findIndex(item => item.id === values.id)
-    items[updateIndex] = makeTimelineItem(values)
+    let updateItem = makeTimelineItem(values)
+    items[updateIndex] = updateItem
+
+    let uid = api.auth.currentUser.uid
+
+    // firebase
+    api.database.ref(`/items/${uid}/${updateItem.id}`).set({
+      title: updateItem.title,
+      group: updateItem.group,
+      start_time: updateItem.start_time.unix(),
+      end_time: updateItem.end_time.unix()
+    })
+    // end
 
     dispatch(
       updateTimelineData({
@@ -147,7 +161,6 @@ const makeTimelineItem = values => {
 
   return {
     ...values,
-    id: values.id ? values.id : Math.random(),
     start_time: moment(new Date(startTime)),
     end_time: moment(new Date(endTime)),
     color: '#31302b',
