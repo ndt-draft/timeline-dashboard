@@ -1,5 +1,5 @@
-import DefaultLayout from './layouts/DefaultLayout'
 import PrivateLayout from './layouts/PrivateLayout'
+import AuthFormLayout from './layouts/AuthFormLayout'
 import asyncComponent from './components/AsyncComponent'
 
 const AsyncTimeline = asyncComponent(() => import('./containers/timeline'))
@@ -15,7 +15,7 @@ const AsyncSignout = asyncComponent(() => import('./containers/signout'))
 
 export default [
   {
-    layout: DefaultLayout,
+    layout: AuthFormLayout,
     routes: [
       {
         path: '/signup',

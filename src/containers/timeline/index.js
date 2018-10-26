@@ -5,16 +5,41 @@ import { fetchTimelineItems } from '../../modules/timeline'
 import './index.scss'
 
 class TimelineDashboard extends React.Component {
+  constructor(props) {
+    super(props)
+    this.contentRef = React.createRef()
+  }
+
   componentDidMount() {
     this.props.fetchTimelineItems()
   }
 
+  requestFullscreen = () => {
+    let fullscreenDiv = this.contentRef.current
+    let fullscreenFunc = fullscreenDiv.requestFullscreen
+
+    if (!fullscreenFunc) {
+      ;[
+        'mozRequestFullScreen',
+        'msRequestFullscreen',
+        'webkitRequestFullScreen'
+      ].forEach(function(req) {
+        fullscreenFunc = fullscreenFunc || fullscreenDiv[req]
+      })
+    }
+
+    fullscreenFunc.call(fullscreenDiv)
+  }
+
   render() {
     return (
-      <div className="timeline-content">
+      <div className="timeline-content" ref={this.contentRef}>
         <h2>Timeline</h2>
-        <div className="timeline-content__dashboard">
-          <Content />
+        <Content />
+        <div className="timeline-footer">
+          <button className="btn btn-primary" onClick={this.requestFullscreen}>
+            Fullscreen
+          </button>
         </div>
       </div>
     )

@@ -1,6 +1,14 @@
+import React from 'react'
 import { connect } from 'react-redux'
-import { updateTimelineItem } from '../../modules/timeline'
+import { updateTimelineItem, removeTimelineItem } from '../../modules/timeline'
 import TimelineForm from '../../components/TimelineForm'
+import styles from './index.module.scss'
+
+const TimelineEdit = props => (
+  <div className={styles.timelineEdit}>
+    <TimelineForm {...props} />
+  </div>
+)
 
 const mapStateToProps = state => ({
   groups: state.timeline.groups,
@@ -8,14 +16,16 @@ const mapStateToProps = state => ({
   minutes: state.timeline.minutes,
   edit: state.timeline.edit,
   formData: state.timeline.formData,
-  submitButtonText: 'Edit'
+  submitButtonText: 'Edit',
+  canRemove: true
 })
 
 const mapDispatchToProps = {
-  submit: updateTimelineItem
+  submit: updateTimelineItem,
+  remove: removeTimelineItem
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TimelineForm)
+)(TimelineEdit)

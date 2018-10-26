@@ -152,6 +152,28 @@ export const updateTimelineItem = values => {
   }
 }
 
+export const removeTimelineItem = values => {
+  return (dispatch, getState) => {
+    // firebase
+    let uid = api.auth.currentUser.uid
+    api.database.ref(`/items/${uid}/${values.id}`).remove()
+    // end
+
+    let state = getState()
+    let items = state.timeline.items
+
+    items = items.filter(item => item.id !== values.id)
+
+    dispatch(
+      updateTimelineData({
+        items
+      })
+    )
+
+    dispatch(push('/timeline'))
+  }
+}
+
 // Utilities
 const makeTimelineItem = values => {
   let startTime = `${values.start_date} ${values.start_hour}:${

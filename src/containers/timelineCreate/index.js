@@ -1,6 +1,14 @@
+import React from 'react'
 import { connect } from 'react-redux'
 import { createTimelineItem, initialState } from '../../modules/timeline'
 import TimelineForm from '../../components/TimelineForm'
+import styles from './index.module.scss'
+
+const TimelineCreate = props => (
+  <div className={styles.timelineCreate}>
+    <TimelineForm {...props} />
+  </div>
+)
 
 const mapStateToProps = state => ({
   groups: state.timeline.groups,
@@ -17,4 +25,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(TimelineForm)
+)(TimelineCreate)

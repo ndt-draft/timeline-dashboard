@@ -1,7 +1,7 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
-import styles from './Header.module.scss'
+import Link from '../Link'
 import utils from '../../modules/utils'
+import styles from './Header.module.scss'
 
 const Header = () => (
   <header className={styles.header}>
@@ -13,8 +13,8 @@ const Header = () => (
       </React.Fragment>
     ) : (
       <React.Fragment>
-        <Link to="/signup">Sign up</Link>
         <Link to="/signin">Sign in</Link>
+        <Link to="/signup">Sign up</Link>
       </React.Fragment>
     )}
   </header>

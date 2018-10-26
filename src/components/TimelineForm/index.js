@@ -2,6 +2,10 @@ import React from 'react'
 import { Formik, Form, Field } from 'formik'
 
 const TimelineForm = props => {
+  const remove = () => {
+    props.remove(props.formData)
+  }
+
   return (
     <Formik
       initialValues={props.formData}
@@ -125,6 +129,15 @@ const TimelineForm = props => {
             className="btn btn-primary">
             {props.submitButtonText}
           </button>
+
+          {props.canRemove && (
+            <button
+              type="button"
+              className="float-right btn btn-danger"
+              onClick={remove}>
+              Remove
+            </button>
+          )}
         </Form>
       )}
     </Formik>

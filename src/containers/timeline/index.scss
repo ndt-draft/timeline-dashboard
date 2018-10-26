@@ -1,4 +1,8 @@
-.timeline-content__dashboard:fullscreen {
+.timeline-content:fullscreen {
   background-color: white;
   padding: 25px;
+
+  .timeline-footer {
+    display: none;
+  }
 }
