@@ -3,10 +3,19 @@ import utils from './utils'
 import { push } from 'connected-react-router'
 
 // Constants
+const UPDATE_AUTH_DATA = 'auth/UPDATE_AUTH_DATA'
+
+// Actions
+const updateAuthData = payload => ({
+  type: UPDATE_AUTH_DATA,
+  payload
+})
 
 // Thunks
 export const signup = values => {
   return dispatch => {
+    dispatch(removeErrorMessage())
+
     api.auth
       .createUserWithEmailAndPassword(values.email, values.password)
       .then(({ user }) => {
@@ -15,15 +24,19 @@ export const signup = values => {
       })
       .catch(function(error) {
         // Handle Errors here.
-        // var errorCode = error.code
-        // var errorMessage = error.message
-        // ...
+        dispatch(
+          updateAuthData({
+            error
+          })
+        )
       })
   }
 }
 
 export const signin = values => {
   return dispatch => {
+    dispatch(removeErrorMessage())
+
     api.auth
       .signInWithEmailAndPassword(values.email, values.password)
       .then(({ user }) => {
@@ -32,9 +45,11 @@ export const signin = values => {
       })
       .catch(function(error) {
         // Handle Errors here.
-        // var errorCode = error.code
-        // var errorMessage = error.message
-        // ...
+        dispatch(
+          updateAuthData({
+            error
+          })
+        )
       })
   }
 }
@@ -47,11 +62,28 @@ export const signout = () => {
   }
 }
 
+export const removeErrorMessage = () => {
+  return dispatch => {
+    dispatch(
+      updateAuthData({
+        error: {}
+      })
+    )
+  }
+}
+
 // Action handlers
-const ACTION_HANDLERS = {}
+const ACTION_HANDLERS = {
+  [UPDATE_AUTH_DATA]: (state, action) => ({
+    ...state,
+    ...action.payload
+  })
+}
 
 // Reducer
-const initialState = {}
+const initialState = {
+  error: {}
+}
 
 export default (state = initialState, action) => {
   const handler = ACTION_HANDLERS[action.type]

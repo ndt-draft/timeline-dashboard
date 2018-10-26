@@ -11,7 +11,7 @@ const AuthFormLayout = ({ component: Component, ...rest }) => (
   <PageLayout
     {...rest}
     component={matchProps => (
-      <div class={styles.authFormLayout}>
+      <div className={styles.authFormLayout}>
         <h1 className="text-center">Timeline Dashboard</h1>
         <Header />
         <Component {...matchProps} />

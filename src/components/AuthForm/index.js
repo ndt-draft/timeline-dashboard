@@ -38,6 +38,10 @@ const AuthForm = props => {
             />
           </div>
 
+          {props.error.message && (
+            <div className="alert alert-danger">{props.error.message}</div>
+          )}
+
           <div className="text-center">
             <button
               type="submit"

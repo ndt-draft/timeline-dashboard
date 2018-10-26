@@ -3,6 +3,7 @@ import { signin } from '../../modules/auth'
 import AuthForm from '../../components/AuthForm'
 
 const mapStateToProps = state => ({
+  error: state.auth.error,
   submitButtonText: 'Sign in'
 })
 
