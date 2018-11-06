@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Content from './Timeline'
+import Period from './Period'
 import { fetchTimelineItems } from '../../modules/timeline'
 import './index.scss'
 
@@ -33,9 +34,14 @@ class TimelineDashboard extends React.Component {
 
   render() {
     return (
-      <div className="timeline-content" ref={this.contentRef}>
-        <h2>Timeline</h2>
-        <Content />
+      <div className="timeline-dashboard" ref={this.contentRef}>
+        <div className="timeline-header">
+          <Period />
+        </div>
+        <div className="timeline-content">
+          <h2>Timeline</h2>
+          <Content />
+        </div>
         <div className="timeline-footer">
           <button className="btn btn-primary" onClick={this.requestFullscreen}>
             Fullscreen

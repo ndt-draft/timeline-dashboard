@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
   minutes: state.timeline.minutes,
   edit: state.timeline.edit,
   formData: state.timeline.formData,
-  submitButtonText: 'Edit',
+  submitButtonText: 'Save',
   canRemove: true
 })
 
